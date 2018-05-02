@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:theme="@style/CustomActionBar"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        android:hint="@string/input_your_name"
+        android:textSize="20sp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:textColorHint="#888"
+        android:id="@+id/fio"
+        android:inputType="text"
+        android:nextFocusUp="@id/fio"
+        android:nextFocusLeft="@id/fio"
+        android:windowSoftInputMode="stateHidden"
+        android:maxLines="1"
+        android:textColor="#000"
+        android:elevation="10dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:shadowRadius="50"
+        android:layout_margin="5dp"
+        android:background="@drawable/edittext_rounded"
+        tools:targetApi="lollipop" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:id="@+id/settings"
+            android:layout_height="wrap_content"
+            android:src="@drawable/settings"
+            android:layout_margin="5dp"
+            android:elevation="10dp"
+            android:background="@drawable/round_button"
+            />
+
+    </LinearLayout>
+
+</android.support.v7.widget.Toolbar>
