@@ -1,12 +1,13 @@
 <resources>
-    <string name="app_name">Выборы</string>
-    <string name="vote">голосовать</string>
-    <string name="subject">предмет</string>
-    <string name="input_your_name">Введите свое имя здесь</string>
-    <string name="apply">подтвердить</string>
-    <string name="cancel">отмена</string>
+    <string name="app_name">Р’С‹Р±РѕСЂС‹</string>
+    <string name="vote">Р“РѕР»РѕСЃРѕРІР°С‚СЊ</string>
+    <string name="subject">РїСЂРµРґРјРµС‚</string>
+    <string name="input_your_name">Р’РІРµРґРёС‚Рµ СЃРІРѕРµ РёРјСЏ Р·РґРµСЃСЊ</string>
+    <string name="apply">РїСЂРёРјРµРЅРёС‚СЊ</string>
+    <string name="cancel">РѕС‚РјРµРЅР°</string>
     <string name="ip">192.168.0.102</string>
-    <string name="question">вопрос</string>
-    <string name="fail">Не удалось подключиться к серверу</string>
+    <string name="question">РІРѕРїСЂРѕСЃ</string>
+    <string name="fail">РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ Рє СЃРµСЂРІРµСЂСѓ</string>
     <string name="candidate_item">%1$s " " %2$d \%</string>
+    <string name="no_name">РРјСЏ РЅРµ РІРІРµРґРµРЅРѕ. Р РµР·СѓР»СЊС‚Р°С‚ РЅРµ РїСЂРёРЅСЏС‚</string>
 </resources>

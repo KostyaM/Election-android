@@ -6,26 +6,21 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -35,19 +30,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
-
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.LinkedList;
 
-import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -73,6 +64,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     });
+    Handler  noname = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            android.support.v7.widget.Toolbar toolbar=findViewById(R.id.toolbar);
+            EditText fioEditTexdt=toolbar.findViewById(R.id.fio);
+            fioEditTexdt.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput( fioEditTexdt, InputMethodManager.SHOW_IMPLICIT);
+            Toast toast=Toast.makeText(getApplicationContext(), R.string.no_name,Toast.LENGTH_SHORT);
+            toast.show();
+            return true;
+        }
+    });
     Handler  infoSetter = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
             subjecTextViewt.setText(subject);
             TextView questionTextView=findViewById(R.id.question);
             questionTextView.setText(question);
+            mSwipeRefreshLayout.setRefreshing(false);
             return true;
         }
     });
@@ -228,6 +233,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     System.out.println(fioEditTexdt);
                     String fio =fioEditTexdt.getText().toString();
+                    if(fio.equals("")){
+                        noname.sendEmptyMessage(0);
+                    }
                     new SendVote(fio, candidate.getName(), connectionSettings.getIp()+"/android").start();
                 }catch (NullPointerException ne){
                     Log.e("SEND","FAIL");
@@ -253,10 +261,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         TextView candidateData=new TextView(this);
-        candidateData.setText(String.format(getResources().getString(R.string.candidate_item),  candidate.getName(), candidate.getVoteCount()));
+        candidateData.setText(candidate.getName()+" "+ candidate.getVoteCount()+"%");
         candidateData.setTextColor(Color.WHITE);
         candidateData.setTextSize(20);
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams)relativelayout.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         candidateData.setPadding(90,20,50,20);
+        candidateData.setLayoutParams(layoutParams);
         relativelayout.addView(candidateData);
 
         progressBarContainer.addView(relativelayout);
@@ -283,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
+            new beautifullAnimation().start();
         }
     }
     class GetInfo extends Thread {
@@ -337,12 +349,7 @@ public class MainActivity extends AppCompatActivity {
         String candidate;
         String url;
         String route;
-        SendVote(String fio,String candidate,String url, String route){
-            this.url=url;
-            this.route=route;
-            this.fio=fio;
-            this.candidate=candidate;
-        }
+
         SendVote(String fio,String candidate,String url){
             this.url=url;
             this.fio=fio;
@@ -386,15 +393,10 @@ public class MainActivity extends AppCompatActivity {
     }
     class NetworkGetJSON extends Thread{
         String url;
-        String route;
+
         OkHttpClient client;
         NetworkGetJSON(String url){
             this.url=url;
-            client = new OkHttpClient();
-        }
-        NetworkGetJSON(String url, String route){
-            this.url=url;
-            this.route=route;
             client = new OkHttpClient();
         }
 
@@ -415,12 +417,8 @@ public class MainActivity extends AppCompatActivity {
             try {
                ParseJson pj= new ParseJson(response.body().string());
                 pj.start();
-                try {
-                    pj.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                new beautifullAnimation().start();
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }catch (NullPointerException ne){

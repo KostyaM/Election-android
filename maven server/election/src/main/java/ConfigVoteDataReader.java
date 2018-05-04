@@ -11,10 +11,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-/**
- * Created by admin on 26.04.2018.
- */
-class ConfigVoteDataReader extends Thread{
+
+class ConfigVoteDataReader{
     String subject,question;
     List<Candidate> output=new LinkedList<>();
 
@@ -30,14 +28,16 @@ class ConfigVoteDataReader extends Thread{
         return output;
     }
 
-    @Override
+
     public void run() {
         List<String> namesOptions=new LinkedList<>();
         Map<String,Integer> candidateVotesCount=new HashMap<>();
-        super.run();
+
         JSONParser parser = new JSONParser();
         try {
-            JSONObject config = (JSONObject) parser.parse(new FileReader("C:\\Users\\admin\\Desktop\\spark\\election\\src\\main\\resources\\configVote.json"));
+            ClassLoader classLoader = getClass().getClassLoader();
+            System.out.println(String.valueOf(classLoader.getResource("configVote.json")));
+            JSONObject config = (JSONObject) parser.parse(new FileReader("src/main/resources/configVote.json"));
             subject= (String) config.get("subject");
             question= (String) config.get("question");
             JSONArray optionsJSONArray= (JSONArray) config.get("options");
@@ -78,8 +78,8 @@ class ConfigVoteDataReader extends Thread{
 
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException pe) {
+            pe.printStackTrace();
         }
 
     }

@@ -26,12 +26,8 @@ public class VoteController {
     };
     public void getData(){
         ConfigVoteDataReader cvdr=new ConfigVoteDataReader();
-        cvdr.start();
-        try {
-            cvdr.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        cvdr.run();
+
         this.question=cvdr.getQuestion();
         this.options=cvdr.getOutput();
         Map<String, Object> model = new HashMap<>();

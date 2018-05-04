@@ -62,12 +62,8 @@ public class MainController {
 
     public void getData(){
         ConfigVoteDataReader cvdr=new ConfigVoteDataReader();
-        cvdr.start();
-        try {
-            cvdr.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        cvdr.run();
+
         subject=cvdr.getSubject();
         options=cvdr.getOutput();
         sql2o = new Sql2o("jdbc:postgresql://" + DatabaseConnectionConfigs.dbHost + ":" + DatabaseConnectionConfigs.port + "/" + DatabaseConnectionConfigs.dbName, DatabaseConnectionConfigs.username, DatabaseConnectionConfigs.password, new PostgresQuirks() {{

@@ -33,12 +33,8 @@ public class InfoController {
     };
     public void getData(){
         ConfigVoteDataReader cvdr=new ConfigVoteDataReader();
-        cvdr.start();
-        try {
-            cvdr.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        cvdr.run();
+
         subject=cvdr.getSubject();
        question=cvdr.getQuestion();
 
