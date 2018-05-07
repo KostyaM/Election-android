@@ -1,0 +1,1 @@
+ALTER TABLE votes RENAME COLUMN percent TO candidate;

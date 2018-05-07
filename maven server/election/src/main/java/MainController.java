@@ -1,9 +1,10 @@
 import Tools.DatabaseConnectionConfigs;
 import Tools.DatabaseTableConfig;
 import Tools.JSONConverter;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.gson.JsonParseException;
+
+
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import org.sql2o.Connection;
@@ -16,8 +17,6 @@ import spark.Response;
 import spark.Route;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.*;
 
 

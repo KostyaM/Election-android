@@ -1,17 +1,10 @@
-import Tools.DatabaseConnectionConfigs;
-import Tools.DatabaseTableConfig;
+
 import Tools.JSONConverter;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonParseException;
-import org.sql2o.Connection;
-import org.sql2o.Sql2o;
-import org.sql2o.converters.UUIDConverter;
-import org.sql2o.quirks.PostgresQuirks;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.UUID;
+
 
 /**
  * Created by admin on 01.05.2018.
@@ -19,15 +12,17 @@ import java.util.UUID;
 public class InfoController {
     String subject,question;
     public Route JSON = (Request request, Response response) -> {
+
+
+
         getData();
-        String responceData="{ \n" +
-                "\t \"subject\":\"" +subject+"\", \n "+
-                "\t \"question\":\"" +question+"\" \n "+
-                "}";
+        InfoItem data=new InfoItem(subject,question);
+
 
         response.status(200);
         response.type("application/json");
-        return responceData;
+        System.out.println(new JSONConverter(data).dataToJson());
+        return new JSONConverter(data).dataToJson();
 
 
     };

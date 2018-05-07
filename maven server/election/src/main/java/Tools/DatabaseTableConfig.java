@@ -6,5 +6,5 @@ package Tools;
 public class DatabaseTableConfig {
     final public static String tableName="votes";
     final public static String fioColumnName="fio";
-    final public static String percentColumnName="percent";
+    final public static String percentColumnName="candidate";
 }
